@@ -20,11 +20,11 @@ def find_kill_list():
     return json_to_python
 
 
-def kill_report(user):
-    params = urllib.urlencode({'kill': user})
+def kill_report(username):
+    params = urllib.urlencode({'ID': username})
     headers = {"Content-type": "application/json"}
     conn = httplib.HTTPConnection("127.0.0.1:8080")
-    conn.request("POST", "/vpn/killReport", params, headers)
+    conn.request("POST", "/api/vpn/killReport", params, headers)
     response = conn.getresponse()
     return response.status
 
@@ -36,10 +36,10 @@ def find_online_user():
     return text
 
 
-while True:
+# while True:
     time.sleep(1)
     online_list = find_online_user()
     for i in find_kill_list()['killList']:
         if online_list['user_name'].find(i['USER_NAME']) != -1:
             kill_progress(online_list['pid'])
-            kill_report(i['USER_NAME'])
+            kill_report(i['ID'])
