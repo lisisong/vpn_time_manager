@@ -30,6 +30,7 @@ def kill_report(username):
 
 
 def find_online_user():
+    os.system("last | grep still | grep ppp")
     r = os.popen("last | grep still | grep ppp")
     text = r.read()
     r.close()
